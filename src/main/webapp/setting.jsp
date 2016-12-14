@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div style="text-align: center;">
-		<img src="/Images/OwnerPortal.jpg" height="20%" width="5%"
+		<img src="Images/OwnerPortal.jpg" height="20%" width="7%"
 			style="float: left" /><br> <br> <br>
 		<h2>Edit Your Settings</h2>
 	</div>

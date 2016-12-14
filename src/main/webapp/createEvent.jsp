@@ -8,22 +8,24 @@
 </head>
 <body>
 	<div style="text-align: center;">
-		<img src="/Images/OwnerPortal.jpg" height="20%" width="5%"
+		<img src="Images/OwnerPortal.jpg" height="20%" width="7%"
 			style="float: left" /><br> <br> <br>
-		<h2>Create New event Here</h2>
-		Event Title:-<input type="text" name="eventTitle"><br>
-		Artist name :-<input type="text" name="artistName"><br>
-		Start Date-Time:-<input type="datetime-local" name="startEvent">
-		End Date-Time:-<input type="datetime-local" name="endEvent">
-		Location:-<input type="text" name="location"><br>
-		Description:-<input type="text" name="description"><br>
-		Event Logo:-<input type="file" name="eventLogo"><br>
-		Genre:-<input type="text" name="genre"><br>
-		<form action="save" method="get">
+		<h2>Create An Event Here</h2>
+		Event Title:-<input type="text" name="eventTitle" required><br><br>
+		Artist Name:-<input type="text" name="artistName" required><br><br>
+		Event Start Date:-<input type="date" name="startDate" required>
+		Event End Date:-<input type="date" name="endDate" required><br><br>
+		Event Start Time:-<input type="time" name="startTime" required>
+		Event End Time:-<input type="time" name="endTime" required><br><br>
+		Location:-<input type="text" name="location" required>
+		Event Description:-<input type="text" name="description"><br><br>
+		Event Image:-<input type="file" name="eventLogo">
+		Genre:-<input type="text" name="genre"><br><br>
+		<form action="allEvents.jsp" method="get">
 			<input type="button" value="Save">
-		</form>
-		<form action="create" method="post">
-			<input type="button" value="create">
+		</form><br>
+		<form action="createEvent.jsp" method="post">
+			<input type="button" value="Create">
 		</form>
 	</div>
 </body>

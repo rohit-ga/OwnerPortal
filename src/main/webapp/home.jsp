@@ -7,8 +7,14 @@
 <title>Owner Portal Home Page</title>
 </head>
 <body>
+	<%
+	    if (request.getAttribute("message") == null) {
+	    } else {
+	        out.print(request.getAttribute("message"));
+	    }
+	%>
 	<div style="text-align: center;">
-		<img src="/Images/OwnerPortal.jpg" height="20%" width="5%"
+		<img src="Images/OwnerPortal.jpg" height="20%" width="7%"
 			style="float: left" /><br> <br> <br>
 		<h2>Owner Portal</h2>
 		<div style="text-align: center;">
