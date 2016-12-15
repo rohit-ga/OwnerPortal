@@ -9,7 +9,7 @@
 <body>
 	<div style="text-align: center;">
 		<img src="Images/OwnerPortal.jpg" height="20%" width="7%"
-			style="float: left" /><br> <br> <br>
+			style="float: left" /><br> <br> <br> <br>
 		<%
 		    if (request.getAttribute("message") == null) {
 		    } else {
@@ -22,13 +22,13 @@
 			Last Name:-<br> <input type="text" name="lName"><br>
 			Gender:-<input type="radio" name="sex" value="male" checked>Male
 			<input type="radio" name="sex" value="female">Female<br>
-			Contact:-<br> <input type="tel" name="contact" required
-				min="10" max="10"><br> Email:-<br> <input
-				type="email" name="email" required><br> Password:-<br>
-			<input type="password" name="password" required><br> <br>
-			<input type="submit" value="Register"><br> <br> <a
-				href="createEvent.jsp">Create event</a>
+			Contact:-<br> <input type="tel" name="contact" required min="10"
+				max="10"><br> Email:-<br> <input type="email"
+				name="email" required><br> Password:-<br> <input
+				type="password" name="password" required><br> <br>
+			<input type="submit" value="Register"><br> <br>
 		</form>
+		<a href="createEvent.jsp">Create event</a>
 	</div>
 </body>
 </html>

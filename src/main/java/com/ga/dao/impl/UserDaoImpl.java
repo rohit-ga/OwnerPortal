@@ -34,7 +34,7 @@ public class UserDaoImpl implements IUserDao {
         }
     }
 
-    private boolean addUser(User user) throws SQLException {
+    public boolean addUser(User user) throws SQLException {
 
         PreparedStatement pst = connection.prepareStatement("insert into user values (?,?,?,?,?,?,?)");
         pst.setInt(1, 0);
@@ -46,5 +46,33 @@ public class UserDaoImpl implements IUserDao {
         pst.setString(7, user.getUserPassword());
         pst.executeUpdate();
         return true;
+    }
+
+    public boolean loginUser(String email, String password) throws SQLException {
+
+        PreparedStatement pst = connection.prepareStatement("select email,password from user where email=? and password=?");
+        pst.setString(1, email);
+        pst.setString(2, password);
+        
+        ResultSet rs = pst.executeQuery();
+        if(rs.next()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int getUserIdByEmail(String email) throws SQLException {
+        
+        PreparedStatement pst = connection.prepareStatement("select user_id from user where email = ?");
+        pst.setString(1, email);
+        
+        int dbUserId = 0;
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()){
+//            dbUserId.setUserId(rs.getInt("user_id"));
+            dbUserId = rs.getInt("user_id");    
+        }
+        return dbUserId;
     }
 }

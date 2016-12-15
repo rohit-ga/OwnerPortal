@@ -15,5 +15,15 @@ public class UserServiceImpl implements IUserService {
         return userDao.registerUser(user);
     }
 
+    public boolean loginUser(String email, String password) throws SQLException {
+        
+        return userDao.loginUser(email,password);
+    }
+
+    public int getUserIdByEmail(String email) throws SQLException {
+        
+        return userDao.getUserIdByEmail(email);
+    }
+
     
 }

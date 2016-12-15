@@ -2,14 +2,18 @@ package com.ga.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.ga.model.Event;
 import com.ga.model.User;
+import com.ga.service.impl.EventServiceImpl;
 import com.ga.service.impl.UserServiceImpl;
 import com.ga.util.Constant;
 
@@ -18,6 +22,7 @@ public class UserController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     UserServiceImpl userService = new UserServiceImpl();
+    EventServiceImpl eventService = new EventServiceImpl();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -46,6 +51,31 @@ public class UserController extends HttpServlet {
         if (action.equals("register")) {
 
             registerUser(request, response);
+        } else if (action.equals("login")) {
+            
+            loginUser(request,response);
+        }
+    }
+
+    private void loginUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        boolean answer = userService.loginUser(email,password);
+        
+        if(answer){
+            HttpSession session = request.getSession(true);
+            session.setAttribute("email", email);
+            request.setAttribute("message", Constant.LOGIN_SUCCESSFUL_MESSAGE);
+            
+            int dbUserId = userService.getUserIdByEmail(email);
+            List<Event> myEventList = eventService.viewMyEvents(dbUserId);
+            request.setAttribute("myEventList", myEventList);
+            request.getRequestDispatcher("allEvents.jsp").forward(request, response);
+        } else {
+            request.setAttribute("message", Constant.LOGIN_ERROR_MESSAGE);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
         }
     }
 
@@ -66,6 +96,10 @@ public class UserController extends HttpServlet {
             request.setAttribute("message", Constant.REGESTRATION_ERROR_MESSAGE);
             request.getRequestDispatcher("registration.jsp").forward(request, response);
         } else {
+            
+            HttpSession session = request.getSession();
+            session.setAttribute("email", email);
+            
             request.setAttribute("message", Constant.REGESTRATION_SUCCESSFUL_MESSAGE);
             request.getRequestDispatcher("createEvent.jsp").forward(request, response);
         }

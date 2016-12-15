@@ -10,7 +10,14 @@
 	<div style="text-align: center;">
 		<img src="Images/OwnerPortal.jpg" height="20%" width="7%"
 			style="float: left" /><br> <br> <br>
+		<%
+		    if (request.getAttribute("message") == null) {
+		    } else {
+		        out.print(request.getAttribute("message"));
+		    }
+		%>
 		<h2>Create An Event Here</h2>
+		<form action="EventController?action=addEvent" method="post"  enctype="multipart/form-data">
 		Event Title:-<input type="text" name="eventTitle" required><br><br>
 		Artist Name:-<input type="text" name="artistName" required><br><br>
 		Event Start Date:-<input type="date" name="startDate" required>
@@ -19,13 +26,12 @@
 		Event End Time:-<input type="time" name="endTime" required><br><br>
 		Location:-<input type="text" name="location" required>
 		Event Description:-<input type="text" name="description"><br><br>
-		Event Image:-<input type="file" name="eventLogo">
+		Event Image:-<input type="file" name="eventImage">
 		Genre:-<input type="text" name="genre"><br><br>
-		<form action="allEvents.jsp" method="get">
-			<input type="button" value="Save">
-		</form><br>
-		<form action="createEvent.jsp" method="post">
-			<input type="button" value="Create">
+		<!-- <form action="allEvents.jsp" method="get">
+			<input type="submit" value="Save">
+		</form><br> -->
+			<input type="submit" value="Create">
 		</form>
 	</div>
 </body>
