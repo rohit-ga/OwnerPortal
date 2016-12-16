@@ -28,7 +28,6 @@
 				type="password" name="password" required><br> <br>
 			<input type="submit" value="Register"><br> <br>
 		</form>
-		<a href="createEvent.jsp">Create event</a>
 	</div>
 </body>
 </html>

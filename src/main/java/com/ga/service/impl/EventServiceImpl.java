@@ -17,8 +17,17 @@ public class EventServiceImpl implements IEventService {
     }
 
     public List<Event> viewMyEvents(int dbUserId) throws SQLException {
+        
         return eventDao.viewMyEvents(dbUserId);
+    }
+
+    public List<Event> viewEventDetails(Integer eventId) throws SQLException {
         
-        
+        return eventDao.viewEventDetails(eventId);
+    }
+
+    public void editMyEventDetails(Event event, Integer eventId) throws SQLException {
+
+        eventDao.editMyEventDetails(event, eventId);
     }
 }

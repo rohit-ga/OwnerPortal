@@ -18,8 +18,10 @@ public class Event {
     private String genre;
     private int userId;
 
-    public Event(String eventTitle, String artistName, Date startDate, Date endDate, Date startTime,
-            Date endTime2, String location, String description, InputStream eventImage, String genre) {
+    private String imageStr;
+
+    public Event(String eventTitle, String artistName, Date startDate, Date endDate, Date startTime, Date endTime2,
+            String location, String description, InputStream eventImage, String genre) {
         super();
         this.eventTitle = eventTitle;
         this.artistName = artistName;
@@ -130,6 +132,14 @@ public class Event {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getImageStr() {
+        return imageStr;
+    }
+
+    public void setImageStr(String imageStr) {
+        this.imageStr = imageStr;
     }
 
 }

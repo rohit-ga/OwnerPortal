@@ -49,10 +49,8 @@ public class UserController extends HttpServlet {
         String action = request.getParameter("action");
 
         if (action.equals("register")) {
-
             registerUser(request, response);
         } else if (action.equals("login")) {
-            
             loginUser(request,response);
         }
     }

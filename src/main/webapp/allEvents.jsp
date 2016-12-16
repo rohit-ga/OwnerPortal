@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@ page import="com.mysql.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,34 +20,20 @@
 		    }
 		%>
 		<h2>List of All Events</h2>
-
 		<table border="1" align="center">
 			<th>Event Title</th>
-			<th>Artist Name</th>
-			<th>Event Start Date</th>
-			<th>Event End Date</th>
-			<th>Event Start Time</th>
-			<th>Event End Time</th>
-			<th>Event Location</th>
-			<th>Event Description</th>
 			<th>Event Logo</th>
-			<th>Genre</th>
+			<th>View</th>
 			<c:forEach items="${myEventList}" var="myEventList">
 				<tr>
 					<td><c:out value="${myEventList.eventTitle}" /></td>
-					<td><c:out value="${myEventList.artistName}" /></td>
-					<td><c:out value="${myEventList.startDate}" /></td>
-					<td><c:out value="${myEventList.endDate}" /></td>
-					<td><c:out value="${myEventList.startTime}" /></td>
-					<td><c:out value="${myEventList.endTime}" /></td>
-					<td><c:out value="${myEventList.location}" /></td>
-					<td><c:out value="${myEventList.description}" /></td>
-					<td><img src="${pageContext.servletContext.contextPath }/EventController?eventImage=${myEventList.eventImage}" /></td>
-					<td><c:out value="${myEventList.genre}" /></td>
+<%-- 					<td><img src="<%= %>" width="500" height="500"/></td> --%>
+					<td><img src="${myEventList.eventImage}" /></td>
+<%-- 					 <img src="data:image/jpeg;base64,${imgBase}" /> --%>
+					<td><a href="EventController?action=viewEvent&eventId=${myEventList.eventId}">View</a></td>
 				</tr>
 			</c:forEach>
 		</table>
-
 	</div>
 </body>
 </html>
