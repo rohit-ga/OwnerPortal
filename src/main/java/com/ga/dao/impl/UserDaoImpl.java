@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.ga.dao.IUserDao;
 import com.ga.model.User;
@@ -50,12 +52,13 @@ public class UserDaoImpl implements IUserDao {
 
     public boolean loginUser(String email, String password) throws SQLException {
 
-        PreparedStatement pst = connection.prepareStatement("select email,password from user where email=? and password=?");
+        PreparedStatement pst = connection
+                .prepareStatement("select email,password from user where email=? and password=?");
         pst.setString(1, email);
         pst.setString(2, password);
-        
+
         ResultSet rs = pst.executeQuery();
-        if(rs.next()){
+        if (rs.next()) {
             return true;
         } else {
             return false;
@@ -63,16 +66,47 @@ public class UserDaoImpl implements IUserDao {
     }
 
     public int getUserIdByEmail(String email) throws SQLException {
-        
+
         PreparedStatement pst = connection.prepareStatement("select user_id from user where email = ?");
         pst.setString(1, email);
-        
+
         int dbUserId = 0;
         ResultSet rs = pst.executeQuery();
-        while (rs.next()){
-//            dbUserId.setUserId(rs.getInt("user_id"));
-            dbUserId = rs.getInt("user_id");    
+        while (rs.next()) {
+            dbUserId = rs.getInt("user_id");
         }
         return dbUserId;
+    }
+
+    public List<User> getUserDetails(int dbUserId) throws SQLException {
+        PreparedStatement pst = connection.prepareStatement("select * from user where user_id = ?");
+        pst.setInt(1, dbUserId);
+        List<User> userDetails = new ArrayList<User>();
+        ResultSet rs = pst.executeQuery();
+        if (rs.next()) {
+            User dbUser = new User();
+            dbUser.setUserId(rs.getInt("user_id"));
+            dbUser.setUserFirstName(rs.getString("first_name"));
+            dbUser.setUserLastName(rs.getString("last_name"));
+            dbUser.setUserGender(rs.getString("gender"));
+            dbUser.setUserContact(rs.getLong("contact"));
+            dbUser.setUserEmail(rs.getString("email"));
+            dbUser.setUserPassword(rs.getString("password"));
+            userDetails.add(dbUser);
+        }
+        return userDetails;
+    }
+
+    public void editUserDetails(User user, Integer userId) throws SQLException {
+
+//        PreparedStatement pst = connection.prepareStatement("update user set first_name='"+user.getUserFirstName()+"', last_name='"+user.getUserLastName()+"', gender='"+user.getUserGender()+"', contact='"+user.getUserContact()+"',email='"+user.getUserEmail()+"' where user_id='"+userId+"'");
+        PreparedStatement pst = connection.prepareStatement("update user set first_name=?,last_name=?, gender=?, contact=?,email=? where user_id=?");
+        pst.setString(1, user.getUserFirstName());
+        pst.setString(2, user.getUserLastName());
+        pst.setString(3, user.getUserGender());
+        pst.setLong(4, user.getUserContact());
+        pst.setString(5, user.getUserEmail());
+        pst.setInt(6, userId);
+        pst.executeUpdate();
     }
 }

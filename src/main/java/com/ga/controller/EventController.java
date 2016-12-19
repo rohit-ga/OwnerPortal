@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.ga.model.Event;
+import com.ga.model.User;
 import com.ga.service.impl.EventServiceImpl;
 import com.ga.service.impl.UserServiceImpl;
 
@@ -58,30 +59,43 @@ public class EventController extends HttpServlet {
         } else if (action.equals("viewEvent")) {
             viewEventDetails(request, response);
         } else if (action.equals("update")) {
-            fetchEventData(request,response);
+            fetchEventData(request, response);
         } else if (action.equals("editEvent")) {
             editMyEventDetails(request, response);
-        }
+        } else if(action.equals("updateUser")){
+            getUserIdByEventId(request,response);
+        } 
+    }
+    
+    private void getUserIdByEventId(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        
+        Integer eventId = Integer.parseInt(request.getParameter("eventId"));
+        int dbUserId = eventService.getUserIdByEventId(eventId);
+        List<User> userDetails = userService.getUserDetails(dbUserId);
+        request.setAttribute("userDetails", userDetails);
+        request.getRequestDispatcher("setting.jsp").forward(request, response);
     }
 
-    private void fetchEventData(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        
+    private void fetchEventData(HttpServletRequest request, HttpServletResponse response) throws SQLException,
+            ServletException, IOException {
+
         Integer eventId = Integer.parseInt(request.getParameter("eventId"));
         List<Event> anEventDetail = eventService.viewEventDetails(eventId);
         request.setAttribute("anEventDetail", anEventDetail);
-        request.getRequestDispatcher("createEvent.jsp").forward(request, response);
+        request.setAttribute("eventId", eventId);
+        request.getRequestDispatcher("updateEvent.jsp").forward(request, response);
     }
 
-    private void editMyEventDetails(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException, ParseException {
-        System.out.println("in edit_event_method::");
+    private void editMyEventDetails(HttpServletRequest request, HttpServletResponse response) throws SQLException,
+            ServletException, IOException, ParseException {
         HttpSession session = request.getSession(true);
         session.getAttribute("email");
+        
         Integer eventId = Integer.parseInt(request.getParameter("eventId"));
-System.out.println("eventId in editeventdetails method: " + eventId);
         String eventTitle = request.getParameter("eventTitle");
         String artistName = request.getParameter("artistName");
-        Date startDate = new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("startDate"));
-        Date endDate = new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("endDate"));
+        Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("startDate"));
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("endDate"));
         Date startTime = new SimpleDateFormat("HH:mm").parse(request.getParameter("startTime"));
         Date endTime = new SimpleDateFormat("HH:mm").parse(request.getParameter("endTime"));
         String location = request.getParameter("location");
@@ -90,11 +104,13 @@ System.out.println("eventId in editeventdetails method: " + eventId);
         InputStream eventImage = filePart.getInputStream();
         String genre = request.getParameter("genre");
 
-        Event event = new Event(eventTitle, artistName, startDate, endDate, startTime, endTime, location, description, eventImage, genre);
-        eventService.editMyEventDetails(event,eventId);
+        Event event = new Event(eventTitle, artistName, startDate, endDate, startTime, endTime, location, description,
+                eventImage, genre);
+        eventService.editMyEventDetails(event, eventId);
         List<Event> anEventDetail = eventService.viewEventDetails(eventId);
         request.setAttribute("anEventDetail", anEventDetail);
         request.getRequestDispatcher("singleEvent.jsp").forward(request, response);
+
     }
 
     private void viewEventDetails(HttpServletRequest request, HttpServletResponse response) throws SQLException,
@@ -115,8 +131,8 @@ System.out.println("eventId in editeventdetails method: " + eventId);
 
         String eventTitle = request.getParameter("eventTitle");
         String artistName = request.getParameter("artistName");
-        Date startDate = new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("startDate"));
-        Date endDate = new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("endDate"));
+        Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("startDate"));
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("endDate"));
         Date startTime = new SimpleDateFormat("HH:mm").parse(request.getParameter("startTime"));
         Date endTime = new SimpleDateFormat("HH:mm").parse(request.getParameter("endTime"));
         String location = request.getParameter("location");

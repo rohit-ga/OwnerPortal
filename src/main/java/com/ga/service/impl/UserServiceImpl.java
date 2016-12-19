@@ -1,6 +1,7 @@
 package com.ga.service.impl;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.ga.dao.impl.UserDaoImpl;
 import com.ga.model.User;
@@ -23,6 +24,16 @@ public class UserServiceImpl implements IUserService {
     public int getUserIdByEmail(String email) throws SQLException {
         
         return userDao.getUserIdByEmail(email);
+    }
+
+    public List<User> getUserDetails(int dbUserId) throws SQLException {
+        
+        return userDao.getUserDetails(dbUserId);
+    }
+
+    public void editUserDetails(User user, Integer userId) throws SQLException {
+
+        userDao.editUserDetails(user, userId);
     }
 
     

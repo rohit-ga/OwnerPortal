@@ -30,4 +30,9 @@ public class EventServiceImpl implements IEventService {
 
         eventDao.editMyEventDetails(event, eventId);
     }
+
+    public int getUserIdByEventId(Integer eventId) throws SQLException {
+      
+        return eventDao.getUserIdByEventId(eventId);
+    }
 }

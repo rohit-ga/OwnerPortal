@@ -20,11 +20,13 @@
 		    }
 		%>
 		<h2>List of All Events</h2>
+		
 		<table border="1" align="center">
 			<th>Event Title</th>
 			<th>Event Logo</th>
 			<th>View</th>
 			<c:forEach items="${myEventList}" var="myEventList">
+			
 				<tr>
 					<td><c:out value="${myEventList.eventTitle}" /></td>
 <%-- 					<td><img src="<%= %>" width="500" height="500"/></td> --%>
@@ -32,6 +34,7 @@
 <%-- 					 <img src="data:image/jpeg;base64,${imgBase}" /> --%>
 					<td><a href="EventController?action=viewEvent&eventId=${myEventList.eventId}">View</a></td>
 				</tr>
+					<a href="EventController?action=updateUser&eventId=${myEventList.eventId}">Setting</a>
 			</c:forEach>
 		</table>
 	</div>

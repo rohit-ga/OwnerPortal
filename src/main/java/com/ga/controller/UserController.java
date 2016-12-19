@@ -52,7 +52,32 @@ public class UserController extends HttpServlet {
             registerUser(request, response);
         } else if (action.equals("login")) {
             loginUser(request,response);
-        }
+        } else if (action.equals("editUser")) {
+            editUserDetails(request,response);
+        } 
+    }
+
+    private void editUserDetails(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        
+        HttpSession session = request.getSession(true);
+        
+        int dbUserId = userService.getUserIdByEmail((String) session.getAttribute("email"));
+        
+        Integer userId = Integer.parseInt(request.getParameter("userId"));
+        
+        String fName = request.getParameter("fName");
+        String lName = request.getParameter("lName");
+        String sex = request.getParameter("sex");
+        Long contact = Long.parseLong(request.getParameter("contact"));
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        
+        User user = new User(fName, lName, sex, contact, email, password);
+        
+        userService.editUserDetails(user, userId);
+        List<Event> myEventList = eventService.viewMyEvents(dbUserId);
+        request.setAttribute("myEventList", myEventList);
+        request.getRequestDispatcher("allEvents.jsp").forward(request, response);
     }
 
     private void loginUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {

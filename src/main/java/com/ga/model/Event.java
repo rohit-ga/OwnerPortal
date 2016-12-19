@@ -114,8 +114,8 @@ public class Event {
         return eventImage;
     }
 
-    public void setEventImage(InputStream eventImage) {
-        this.eventImage = eventImage;
+    public void setEventImage(InputStream binaryStream) {
+        this.eventImage = binaryStream;
     }
 
     public String getGenre() {
