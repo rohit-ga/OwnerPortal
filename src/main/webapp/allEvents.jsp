@@ -12,7 +12,16 @@
 <body>
 	<div style="text-align: center;">
 		<img src="Images/OwnerPortal.jpg" height="20%" width="7%"
-			style="float: left" /><br> <br> <br> <br>
+			style="float: left" /><br> <br> <br> <br> <a
+			href="UserController?action=logout" style="float: right">Logout</a>
+		<%
+		    response.setHeader("Cache-Control", "no-cache");
+		    response.setHeader("Cache-Control", "no-store");
+		    response.setHeader("Pragma", "no-cache");
+		    response.setDateHeader("Expires", 0);
+		    if (session.getAttribute("email") == null)
+		        response.sendRedirect("home.jsp");
+		%>
 		<%
 		    if (request.getAttribute("message") == null) {
 		    } else {
@@ -20,21 +29,20 @@
 		    }
 		%>
 		<h2>List of All Events</h2>
-		
 		<table border="1" align="center">
 			<th>Event Title</th>
 			<th>Event Logo</th>
 			<th>View</th>
 			<c:forEach items="${myEventList}" var="myEventList">
-			
 				<tr>
 					<td><c:out value="${myEventList.eventTitle}" /></td>
-<%-- 					<td><img src="<%= %>" width="500" height="500"/></td> --%>
-					<td><img src="${myEventList.eventImage}" /></td>
-<%-- 					 <img src="data:image/jpeg;base64,${imgBase}" /> --%>
-					<td><a href="EventController?action=viewEvent&eventId=${myEventList.eventId}">View</a></td>
-				</tr>
+					<td><img
+						src="${pageContext.request.contextPath}/PhotoController?eventId=${myEventList.eventId}"
+						width="50" height="50"></td>
+					<td><a
+						href="EventController?action=viewEvent&eventId=${myEventList.eventId}">View</a></td>
 					<a href="EventController?action=updateUser&eventId=${myEventList.eventId}">Setting</a>
+				</tr>
 			</c:forEach>
 		</table>
 	</div>

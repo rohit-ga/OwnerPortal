@@ -54,7 +54,9 @@ public class UserController extends HttpServlet {
             loginUser(request,response);
         } else if (action.equals("editUser")) {
             editUserDetails(request,response);
-        } 
+        } else if (action.equals("logout")) {
+            response.sendRedirect("home.jsp");
+        }
     }
 
     private void editUserDetails(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {

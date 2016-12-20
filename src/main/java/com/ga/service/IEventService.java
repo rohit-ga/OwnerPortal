@@ -12,4 +12,10 @@ public interface IEventService {
     public void insertEvent(Event event, int dbUserId) throws SQLException;
     
     public List<Event> viewEventDetails(Integer eventId) throws SQLException;
+    
+    public void editMyEventDetails(Event event, Integer eventId) throws SQLException;
+    
+    public int getUserIdByEventId(Integer eventId) throws SQLException;
+
+    public Event getEventbyId(Integer eventId);
 }

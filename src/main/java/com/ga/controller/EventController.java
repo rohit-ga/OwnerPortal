@@ -149,4 +149,22 @@ public class EventController extends HttpServlet {
         request.setAttribute("myEventList", myEventList);
         request.getRequestDispatcher("allEvents.jsp").forward(request, response);
     }
+    
+    /*protected void sendBlobObjToJsp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Integer eventId = Integer.parseInt(request.getParameter("eventId"));
+        Event dbEvent = eventService.getEventbyId(eventId);
+
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+        int nRead;
+        byte[] data = new byte[8192];
+
+        while ((nRead = dbEvent.getEventImage().read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+        }
+        buffer.flush();
+
+        response.getOutputStream().write(buffer.toByteArray());
+    }*/
 }

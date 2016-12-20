@@ -35,6 +35,4 @@ public class UserServiceImpl implements IUserService {
 
         userDao.editUserDetails(user, userId);
     }
-
-    
 }

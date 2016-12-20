@@ -99,7 +99,6 @@ public class UserDaoImpl implements IUserDao {
 
     public void editUserDetails(User user, Integer userId) throws SQLException {
 
-//        PreparedStatement pst = connection.prepareStatement("update user set first_name='"+user.getUserFirstName()+"', last_name='"+user.getUserLastName()+"', gender='"+user.getUserGender()+"', contact='"+user.getUserContact()+"',email='"+user.getUserEmail()+"' where user_id='"+userId+"'");
         PreparedStatement pst = connection.prepareStatement("update user set first_name=?,last_name=?, gender=?, contact=?,email=? where user_id=?");
         pst.setString(1, user.getUserFirstName());
         pst.setString(2, user.getUserLastName());

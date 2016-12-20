@@ -11,6 +11,15 @@
 	<div style="text-align: center;">
 		<img src="Images/OwnerPortal.jpg" height="20%" width="7%"
 			style="float: left" /><br> <br> <br>
+		<a href="UserController?action=logout" style="float: right">Logout</a>
+		<%
+		    response.setHeader("Cache-Control", "no-cache");
+		    response.setHeader("Cache-Control", "no-store");
+		    response.setHeader("Pragma", "no-cache");
+		    response.setDateHeader("Expires", 0);
+		    if (session.getAttribute("email") == null)
+		        response.sendRedirect("home.jsp");
+		%>
 		<h2>Edit Your Settings</h2>
 		<form action="UserController?action=editUser" method="post">
 			<c:forEach items="${userDetails}" var="userDetails">
@@ -30,8 +39,8 @@
 			Email:-<br>
 				<input type="email" name="email" value="${userDetails.userEmail}"
 					required>
-				<br> <br>
-
+				<br>
+				<br>
 				<input type="submit" value="Save">
 				<br>
 				<br>

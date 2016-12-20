@@ -12,17 +12,17 @@ public class EventServiceImpl implements IEventService {
     EventDaoImpl eventDao = new EventDaoImpl();
 
     public void insertEvent(Event event, int dbUserId) throws SQLException {
-        
+
         eventDao.insertEvent(event, dbUserId);
     }
 
     public List<Event> viewMyEvents(int dbUserId) throws SQLException {
-        
+
         return eventDao.viewMyEvents(dbUserId);
     }
 
     public List<Event> viewEventDetails(Integer eventId) throws SQLException {
-        
+
         return eventDao.viewEventDetails(eventId);
     }
 
@@ -32,7 +32,12 @@ public class EventServiceImpl implements IEventService {
     }
 
     public int getUserIdByEventId(Integer eventId) throws SQLException {
-      
+
         return eventDao.getUserIdByEventId(eventId);
+    }
+
+    public Event getEventbyId(Integer eventId) {
+        
+        return eventDao.getEventById(eventId);
     }
 }
