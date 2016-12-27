@@ -13,7 +13,8 @@
 	<div style="text-align: center;">
 		<img src="Images/OwnerPortal.jpg" height="20%" width="7%"
 			style="float: left" /><br> <br> <br> <br> <a
-			href="UserController?action=logout" style="float: right">Logout</a>
+			href="createEvent.jsp" style="float: right">Create An Event</a><br>
+		<br> <a href="UserController?action=logout" style="float: right">Logout</a>
 		<%
 		    response.setHeader("Cache-Control", "no-cache");
 		    response.setHeader("Cache-Control", "no-store");
@@ -41,8 +42,10 @@
 						width="50" height="50"></td>
 					<td><a
 						href="EventController?action=viewEvent&eventId=${myEventList.eventId}">View</a></td>
-					<a href="EventController?action=updateUser&eventId=${myEventList.eventId}">Setting</a>
 				</tr>
+				<a
+					href="EventController?action=updateUser&eventId=${myEventList.eventId}">Setting</a>
+
 			</c:forEach>
 		</table>
 	</div>

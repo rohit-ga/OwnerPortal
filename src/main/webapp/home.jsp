@@ -11,6 +11,12 @@
 		<img src="Images/OwnerPortal.jpg" height="20%" width="7%"
 			style="float: left" /><br> <br> <br>
 		<%
+		    response.setHeader("Cache-Control", "no-cache");
+		    response.setHeader("Cache-Control", "no-store");
+		    response.setHeader("Pragma", "no-cache");
+		    response.setDateHeader("Expires", 0);
+		%>
+		<%
 		    if (request.getAttribute("message") == null) {
 		    } else {
 		        out.print(request.getAttribute("message"));

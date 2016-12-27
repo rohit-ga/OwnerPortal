@@ -16,17 +16,25 @@
 		        out.print(request.getAttribute("message"));
 		    }
 		%>
+		<%
+		    if (request.getAttribute("errors") == null) {
+		    } else {
+		        out.print(request.getAttribute("errors"));
+		    }
+		%>
 		<h2>Register Your Details Here</h2>
 		<form action="UserController?action=register" method="post">
-			First Name:-<br> <input type="text" name="fName"><br>
-			Last Name:-<br> <input type="text" name="lName"><br>
+			First Name:-<br> <input type="text" name="fName"
+				pattern="[A-Za-z]{1,32}"><br> Last Name:-<br> <input
+				type="text" name="lName" pattern="[A-Za-z]{1,32}"><br>
 			Gender:-<input type="radio" name="sex" value="male" checked>Male
 			<input type="radio" name="sex" value="female">Female<br>
-			Contact:-<br> <input type="tel" name="contact" required min="10"
-				max="10"><br> Email:-<br> <input type="email"
-				name="email" required><br> Password:-<br> <input
-				type="password" name="password" required><br> <br>
-			<input type="submit" value="Register"><br> <br>
+			Contact:-<br> <input type="tel" name="contact"
+				pattern="[789][0-9]{9}" maxlength="10" required><br>
+			Email:-<br> <input type="email" name="email" required><br>
+			Password:-<br> <input type="password" name="password"
+				pattern=".{6,}" required><br> <br> <input
+				type="submit" value="Register"><br> <br>
 		</form>
 	</div>
 </body>
