@@ -126,8 +126,7 @@ public class EventController extends HttpServlet {
             IOException, SQLException, ServletException {
 
         HttpSession session = request.getSession(true);
-        String email = (String) session.getAttribute("email");
-        int dbUserId = userService.getUserIdByEmail(email);
+        int dbUserId = userService.getUserIdByEmail((String) session.getAttribute("email"));
 
         String eventTitle = request.getParameter("eventTitle");
         String artistName = request.getParameter("artistName");
