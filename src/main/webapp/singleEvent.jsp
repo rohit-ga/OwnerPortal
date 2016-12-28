@@ -11,7 +11,7 @@
 	<div style="text-align: center;">
 		<img src="Images/OwnerPortal.jpg" height="20%" width="7%"
 			style="float: left" /><br> <br> <br> <a
-			href="UserController?action=logout" style="float: right">Logout</a>
+			href="usercontroller?action=logout" style="float: right">Logout</a>
 		<%
 		    response.setHeader("Cache-Control", "no-cache");
 		    response.setHeader("Cache-Control", "no-store");
@@ -44,11 +44,11 @@
 					<td><c:out value="${anEventDetail.location}" /></td>
 					<td><c:out value="${anEventDetail.description}" /></td>
 					<td><img
-						src="${pageContext.request.contextPath}/PhotoController?eventId=${anEventDetail.eventId}"
+						src="${pageContext.request.contextPath}/photocontroller?eventId=${anEventDetail.eventId}"
 						width="50" height="50"></td>
 					<td><c:out value="${anEventDetail.genre}" /></td>
 					<td><a
-						href="EventController?action=update&eventId=${anEventDetail.eventId}">Edit</a></td>
+						href="eventcontroller?action=update&eventId=${anEventDetail.eventId}">Edit</a></td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -23,7 +23,7 @@
 		    }
 		%>
 		<h2>Register Your Details Here</h2>
-		<form action="UserController?action=register" method="post">
+		<form action="usercontroller?action=register" method="post">
 			First Name:-<br> <input type="text" name="fName"
 				pattern="[A-Za-z]{1,32}"><br> Last Name:-<br> <input
 				type="text" name="lName" pattern="[A-Za-z]{1,32}"><br>

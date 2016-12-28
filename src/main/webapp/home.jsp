@@ -24,7 +24,7 @@
 		%>
 		<h2>Owner Portal</h2>
 		<div style="text-align: center;">
-			<form action="UserController?action=login" method="post">
+			<form action="usercontroller?action=login" method="post">
 				Email :- <input type="email" name="email" required><br>
 				<br> Password :- <input type="password" name="password"
 					required><br> <br> <input type="submit"

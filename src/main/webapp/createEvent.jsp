@@ -12,12 +12,20 @@
 		<img src="Images/OwnerPortal.jpg" height="20%" width="7%"
 			style="float: left" /><br> <br> <br>
 		<%
+		    response.setHeader("Cache-Control", "no-cache");
+		    response.setHeader("Cache-Control", "no-store");
+		    response.setHeader("Pragma", "no-cache");
+		    response.setDateHeader("Expires", 0);
+		    if (session.getAttribute("email") == null)
+		        response.sendRedirect("home.jsp");
+		%>
+		<%
 		    if (request.getAttribute("message") == null) {
 		    } else {
 		        out.print(request.getAttribute("message"));
 		    }
 		%>
-		<form action="EventController?action=addEvent" method="post" enctype="multipart/form-data">
+		<form action="eventcontroller?action=addEvent" method="post" enctype="multipart/form-data">
 		<h2>Create An Event Here</h2>
 		Event Title:-<input type="text" name="eventTitle" required><br><br>
 		Artist Name:-<input type="text" name="artistName" required><br><br>

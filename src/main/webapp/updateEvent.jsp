@@ -11,7 +11,7 @@
 	<div style="text-align: center;">
 		<img src="Images/OwnerPortal.jpg" height="20%" width="7%"
 			style="float: left" /><br> <br> <br> <br> <a
-			href="UserController?action=logout" style="float: right">Logout</a>
+			href="usercontroller?action=logout" style="float: right">Logout</a>
 		<%
 		    response.setHeader("Cache-Control", "no-cache");
 		    response.setHeader("Cache-Control", "no-store");
@@ -27,7 +27,7 @@
 		    }
 		%>
 
-		<form action="EventController?action=editEvent" method="post"
+		<form action="eventcontroller?action=editEvent" method="post"
 			enctype="multipart/form-data">
 			<h3>Update Your Event Details</h3>
 			<c:forEach items="${anEventDetail}" var="anEventDetail">

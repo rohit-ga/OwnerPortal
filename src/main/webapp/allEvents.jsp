@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@ page import="com.mysql.*"%>
+<%-- <%@ page session="false" %> --%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,7 +16,7 @@
 		<img src="Images/OwnerPortal.jpg" height="20%" width="7%"
 			style="float: left" /><br> <br> <br> <br> <a
 			href="createEvent.jsp" style="float: right">Create An Event</a><br>
-		<br> <a href="UserController?action=logout" style="float: right">Logout</a>
+		<br> <a href="usercontroller?action=logout" style="float: right">Logout</a>
 		<%
 		    response.setHeader("Cache-Control", "no-cache");
 		    response.setHeader("Cache-Control", "no-store");
@@ -38,13 +40,13 @@
 				<tr>
 					<td><c:out value="${myEventList.eventTitle}" /></td>
 					<td><img
-						src="${pageContext.request.contextPath}/PhotoController?eventId=${myEventList.eventId}"
+						src="${pageContext.request.contextPath}/photocontroller?eventId=${myEventList.eventId}"
 						width="50" height="50"></td>
 					<td><a
-						href="EventController?action=viewEvent&eventId=${myEventList.eventId}">View</a></td>
+						href="eventcontroller?action=viewEvent&eventId=${myEventList.eventId}">View</a></td>
 				</tr>
 				<a
-					href="EventController?action=updateUser&eventId=${myEventList.eventId}">Setting</a>
+					href="eventcontroller?action=updateUser&eventId=${myEventList.eventId}">Setting</a>
 
 			</c:forEach>
 		</table>

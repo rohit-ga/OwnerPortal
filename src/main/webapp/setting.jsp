@@ -10,8 +10,8 @@
 <body>
 	<div style="text-align: center;">
 		<img src="Images/OwnerPortal.jpg" height="20%" width="7%"
-			style="float: left" /><br> <br> <br>
-		<a href="UserController?action=logout" style="float: right">Logout</a>
+			style="float: left" /><br> <br> <br> <a
+			href="usercontroller?action=logout" style="float: right">Logout</a>
 		<%
 		    response.setHeader("Cache-Control", "no-cache");
 		    response.setHeader("Cache-Control", "no-store");
@@ -21,24 +21,30 @@
 		        response.sendRedirect("home.jsp");
 		%>
 		<h2>Edit Your Settings</h2>
-		<form action="UserController?action=editUser" method="post">
+		<form action="usercontroller?action=editUser" method="post">
 			<c:forEach items="${userDetails}" var="userDetails">
 				<input type="hidden" name="userId" value="${userDetails.userId}">
 			First Name:-<br>
-				<input type="text" name="fName" value="${userDetails.userFirstName}">
+				<input type="text" name="fName" pattern="[A-Za-z]{1,32}"
+					value="${userDetails.userFirstName}">
 				<br> Last Name:-<br>
-				<input type="text" name="lName" value="${userDetails.userLastName}">
+				<input type="text" name="lName" pattern="[A-Za-z]{1,32}"
+					value="${userDetails.userLastName}">
 				<br>
 			Gender:-<input type="radio" name="sex" value="male" checked
 					value="${userDetails.userGender}">Male <input type="radio"
 					name="sex" value="female" value="${userDetails.userGender}">Female<br>
 			Contact:-<br>
-				<input type="tel" name="contact" value="${userDetails.userContact}"
-					required min="10" max="10">
+				<input type="tel" name="contact" maxlength="10"
+					pattern="[789][0-9]{9}" value="${userDetails.userContact}" required>
 				<br>
 			Email:-<br>
 				<input type="email" name="email" value="${userDetails.userEmail}"
 					required>
+				<br>
+				Password:-<br>
+				<input type="password" name="password"
+					value="${userDetails.userPassword}" pattern=".{6,}" required>
 				<br>
 				<br>
 				<input type="submit" value="Save">
