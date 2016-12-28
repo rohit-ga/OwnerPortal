@@ -18,18 +18,19 @@ public class DatabaseConnection {
         return dbConnection;
     }
 
-    public static Connection doConnection() throws SQLException, InstantiationException, IllegalAccessException {
-        
+    public static Connection doConnection() {
+
         Connection con = null;
-     
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection("jdbc:mysql://localhost/");
-            return con;
-        } catch (ClassNotFoundException e) {
-            System.out.println("Connection Error is:- " + e.getException());
-            e.printStackTrace();
-        }
-        return null;
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                try {
+                    con = DriverManager.getConnection("jdbc:mysql://localhost/");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        return con;
     }
 }
