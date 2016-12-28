@@ -2,7 +2,6 @@ package com.ga.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +13,7 @@ import com.ga.model.Event;
 import com.ga.service.IEventService;
 import com.ga.service.impl.EventServiceImpl;
 
-@WebServlet("/PhotoController")
+@WebServlet("/photocontroller")
 public class PhotoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     Event dbEvent;
@@ -27,11 +26,7 @@ public class PhotoController extends HttpServlet {
         Integer eventId = Integer.parseInt(request.getParameter("eventId"));
         IEventService eventService = new EventServiceImpl();
         
-        try {
-            dbEvent = eventService.getEventbyId(eventId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        dbEvent = eventService.getEventbyId(eventId);
 
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 

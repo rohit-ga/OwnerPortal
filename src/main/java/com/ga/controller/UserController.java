@@ -19,20 +19,27 @@ import com.ga.service.impl.EventServiceImpl;
 import com.ga.service.impl.UserServiceImpl;
 import com.ga.util.Constant;
 
-@WebServlet("/UserController")
+/**
+ * The Class UserController.
+ */
+@WebServlet("/usercontroller")
 public class UserController extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
     UserServiceImpl userService;
+
     EventServiceImpl eventService;
-    
+
+    /**
+     * Instantiates a new user controller.
+     */
     public UserController() {
         userService = new UserServiceImpl();
         eventService = new EventServiceImpl();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         try {
             doProcess(request, response);
         } catch (SQLException e) {
@@ -50,34 +57,58 @@ public class UserController extends HttpServlet {
         }
     }
 
+    /**
+     * Do process.
+     *
+     * @param request the request
+     * @param response the response
+     * @throws ServletException the servlet exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws SQLException the SQL exception
+     */
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException, SQLException {
 
         String action = request.getParameter("action");
 
-        if (action.equals("register")) {
+        if (action.equals(Constant.REGISTER_USER)) {
             registerUser(request, response);
 
-        } else if (action.equals("login")) {
+        } else if (action.equals(Constant.LOGIN_USER)) {
             loginUser(request, response);
 
-        } else if (action.equals("editUser")) {
+        } else if (action.equals(Constant.EDIT_USER)) {
             editUserDetails(request, response);
 
-        } else if (action.equals("logout")) {
-            response.sendRedirect("home.jsp");
+        } else if (action.equals(Constant.LOGOUT)) {
+            redirectToHomePage(request,response);
+            
         }
     }
 
-    private void validation(HttpServletRequest request, HttpServletResponse response) {
-
-        
-        
+    private void redirectToHomePage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        logout from the current page
+        HttpSession session = request.getSession(false);
+        if(session!=null)
+            session.invalidate();
+        response.sendRedirect("home.jsp");
+//            session.setAttribute("email", session.getAttribute("email"));
     }
 
+    /**
+     * Edits the user details.
+     *
+     * @param request the request
+     * @param response the response
+     * @throws SQLException the SQL exception
+     * @throws ServletException the servlet exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private void editUserDetails(HttpServletRequest request, HttpServletResponse response) throws SQLException,
             ServletException, IOException {
-
+//        editing user personal details
+        Map<String, String> errors = new HashMap<String, String>();
+        
         HttpSession session = request.getSession(true);
 
         int dbUserId = userService.getUserIdByEmail((String) session.getAttribute("email"));
@@ -90,6 +121,8 @@ public class UserController extends HttpServlet {
         Long contact = Long.parseLong(request.getParameter("contact"));
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        
+        checkParameters(request, response, errors, contact, email, password);
 
         User user = new User(fName, lName, sex, contact, email, password);
 
@@ -99,15 +132,25 @@ public class UserController extends HttpServlet {
         request.getRequestDispatcher("allEvents.jsp").forward(request, response);
     }
 
+    /**
+     * Login user.
+     *
+     * @param request the request
+     * @param response the response
+     * @throws SQLException the SQL exception
+     * @throws ServletException the servlet exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private void loginUser(HttpServletRequest request, HttpServletResponse response) throws SQLException,
             ServletException, IOException {
-
+//        for login purpose
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
         boolean answer = userService.loginUser(email, password);
 
         if (answer) {
+            // if login credentials are correct
             HttpSession session = request.getSession(true);
             session.setAttribute("email", email);
             request.setAttribute("message", Constant.LOGIN_SUCCESSFUL_MESSAGE);
@@ -116,50 +159,44 @@ public class UserController extends HttpServlet {
             List<Event> myEventList = eventService.viewMyEvents(dbUserId);
             request.setAttribute("myEventList", myEventList);
             request.getRequestDispatcher("allEvents.jsp").forward(request, response);
+
         } else {
             request.setAttribute("message", Constant.LOGIN_ERROR_MESSAGE);
             request.getRequestDispatcher("home.jsp").forward(request, response);
         }
     }
 
-    private void registerUser(HttpServletRequest request, HttpServletResponse response) throws SQLException,
-            ServletException, IOException {
-
+    /**
+     * Register user.
+     *
+     * @param request the request
+     * @param response the response
+     * @throws SQLException the SQL exception
+     * @throws ServletException the servlet exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    private void registerUser(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+            IOException {
+//        registration of new user
         Map<String, String> errors = new HashMap<String, String>();
-        
+
         String fName = request.getParameter("fName");
         String lName = request.getParameter("lName");
         String sex = request.getParameter("sex");
         Long contact = Long.parseLong(request.getParameter("contact"));
-        if (contact == null) {
-            errors.put("errors", "Contact Should Not Be Blank");
-            request.setAttribute("errors", errors);
-            request.getRequestDispatcher("registration.jsp").forward(request, response);
-        }
-        if(contact !=null && contact.SIZE < 10){
-            errors.put("errors", "Minimum 10 Digits Required In Contact Field.");
-        }
         String email = request.getParameter("email");
-        if (email == null || "".equals(email)) {
-//            throw new NullPointerException("Email is required for registration.");
-            errors.put("errors", "Email Is Required For Registration.");
-        }
         String password = request.getParameter("password");
-        if (password == null || "".equals(password)) {
-//            throw new NullPointerException("Password shouldn't be blank or contain space");
-            errors.put("errors", "Password Shouldn't Be Blank Or Contain Space");
-        }
-        if (password != null && password.length() < 6) {
-//            throw new ServletException("Password should be greater than 6 digit");
-            errors.put("errors", "Password Should Be Greater Than 6 Digit");
-        }
+
+        checkParameters(request, response, errors, contact, email, password);
 
         User user = new User(fName, lName, sex, contact, email, password);
+
         boolean answer = userService.registerUser(user);
 
         if (!answer) {
             request.setAttribute("message", Constant.REGESTRATION_ERROR_MESSAGE);
             request.getRequestDispatcher("registration.jsp").forward(request, response);
+
         } else {
 
             HttpSession session = request.getSession();
@@ -167,6 +204,40 @@ public class UserController extends HttpServlet {
 
             request.setAttribute("message", Constant.REGESTRATION_SUCCESSFUL_MESSAGE);
             request.getRequestDispatcher("createEvent.jsp").forward(request, response);
+        }
+    }
+
+    private void checkParameters(HttpServletRequest request, HttpServletResponse response, Map<String, String> errors,
+            Long contact, String email, String password) throws ServletException, IOException {
+
+        if (contact == null) {
+            errors.put("errors", Constant.BLANK_CONTACT);
+            request.setAttribute("errors", errors);
+            request.getRequestDispatcher("registration.jsp").forward(request, response);
+        }
+
+        if (contact != null && contact.longValue() < 10) {
+            errors.put("errors", Constant.LESS_CONTACT_DIGIT);
+            request.setAttribute("errors", errors);
+            request.getRequestDispatcher("registration.jsp").forward(request, response);
+        }
+
+        if (email == null || "".equals(email)) {
+            errors.put("errors", Constant.BLANK_EMAIL);
+            request.setAttribute("errors", errors);
+            request.getRequestDispatcher("registration.jsp").forward(request, response);
+        }
+
+        if (password == null || "".equals(password)) {
+            errors.put("errors", Constant.BLANK_PASSWORD_WITH_SPACE);
+            request.setAttribute("errors", errors);
+            request.getRequestDispatcher("registration.jsp").forward(request, response);
+        }
+
+        if (password != null && password.length() < 6) {
+            errors.put("errors", Constant.LESS_PASSWORD_CHAR);
+            request.setAttribute("errors", errors);
+            request.getRequestDispatcher("registration.jsp").forward(request, response);
         }
     }
 }
